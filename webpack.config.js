@@ -10,8 +10,21 @@ module.exports = {
         filename: "bundle.js"
     },
     module: {
-        rules: [
-
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                option: {
+                    'presets': [latest],
+                }
+            }
         ]
-    }
+    },
+    plugins: [
+        //自动生成index.html文件
+        new htmlWebpackPlugin({
+            filename: 'index.html',
+            template: "index.html"
+        })
+    ]
 };
