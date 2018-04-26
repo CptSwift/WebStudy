@@ -1,0 +1,22 @@
+{
+  "name": "webstudy",
+  "version": "1.0.0",
+  "description": "a start to study web",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CptSwift/WebStudy.git"
+  },
+  "author": "CptSwift",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CptSwift/WebStudy/issues"
+  },
+  "homepage": "https://github.com/CptSwift/WebStudy#readme",
+  "devDependencies": {
+    "webpack": "^4.6.0"
+  }
+}
