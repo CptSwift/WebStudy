@@ -1,2 +1,2 @@
 # WebStudy
-[SanQuickStart](https://cptswift.github.io/WebStudy/QuickStart.html)
+[SanQuickStart](https://cptswift.me/WebStudy/QuickStart.html)
