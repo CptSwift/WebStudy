@@ -1,2 +1,2 @@
 # WebStudy
-[demo](http://carryguan.me/flex-add/fb1.html)
+[demo](https://cptswift.github.io/WebStudy/index.html)
