@@ -1,2 +1,2 @@
 # WebStudy
-[demo](https://cptswift.github.io/WebStudy/index.html)
+[demo](https://cptswift.github.io/WebStudy/QuickStart.html)
