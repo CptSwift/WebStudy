@@ -4,6 +4,7 @@
 <head>
     <title>Quick Start</title>
     <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
 </head>
 
 <body>
@@ -11,17 +12,32 @@
     const MyApp = san.defineComponent({
         template: `
                 <div>
-                    <input type="text" value="{=name=}">
-                    <p>Hello {{name}}!</p>
+                    <input type="string" value="{=name=}">
+                    <input type="number" value="{=age=}">
+                    <input type="string" value="{=des=}">
+                    <p><b>信息：</b></p>
+                    <button on-click="clear()">移除信息</button>
+                    <br>
+                    <p>姓名： {{name}}</p>
+                    <p>年龄： {{age}}</p>
+                    <p>简介： {{des}}</p>
                 </div>
-            `
-    });
-
-    let myApp = new MyApp({
-        data: {
-            name: 'San'
+            `,
+        initData: function () {
+            return {
+                name: 'chen',
+                age: '12',
+                des: 'aa'
+            };
+        },
+        clear: function () {
+            this.data.set('name','');
+            this.data.set('age','');
+            this.data.set('des','');
         }
     });
+
+    let myApp = new MyApp;
     myApp.attach(document.body);
 </script>
 </body>
