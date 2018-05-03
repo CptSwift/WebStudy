@@ -12,11 +12,11 @@
     const MyApp = san.defineComponent({
         template: `
                 <div>
-                    <input type="string" value="{=name=}">
-                    <input type="number" value="{=age=}">
-                    <input type="string" value="{=des=}">
-                    <p><b>信息：</b></p>
-                    <button on-click="clear()">移除信息</button>
+                    <input type="string" value="{=name=}" placeholder="姓名（string）">
+                    <input type="number" value="{=age=}" placeholder="年龄（number）">
+                    <input type="string" value="{=des=}" placeholder="简介（string）">
+                    <br>
+                    <b>信息：</b><button on-click="clear()">移除信息</button>
                     <br>
                     <p>姓名： {{name}}</p>
                     <p>年龄： {{age}}</p>
@@ -25,15 +25,15 @@
             `,
         initData: function () {
             return {
-                name: 'chen',
-                age: '12',
-                des: 'aa'
+                name: undefined,
+                age: undefined,
+                des: undefined
             };
         },
         clear: function () {
-            this.data.set('name','');
-            this.data.set('age','');
-            this.data.set('des','');
+            this.data.set('name',undefined);
+            this.data.set('age',undefined);
+            this.data.set('des',undefined);
         }
     });
 
