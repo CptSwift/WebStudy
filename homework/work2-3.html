@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quick Start</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        .red{
+            background: red;
+        }
+        .blue{
+            background: blue;
+        }
+        *{
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<script>
+    const MyApp = san.defineComponent({
+        template: `
+                <div>
+                    <div id="class-test" class="list {{class_color == 'red' ? 'red' : 'blue'}}" style="width: 100px; height: 100px;" on-click="class_change()"></div>
+                    <div id="style-test" style="background: {{style_color}}; width: 100px; height: 100px;" on-click="style_change()"></div>
+        `,
+        initData: function () {
+            return {
+                class_color: 'red',
+                style_color: 'red'
+            };
+        },
+        //用class的方式改变样式
+        class_change: function () {
+            if(this.data.get('class_color') == 'red'){
+                this.data.set('class_color','blue');
+            }
+            else{
+                this.data.set('class_color','red');
+            }
+        },
+        //用style的方式改变样式
+        style_change: function () {
+            if(this.data.get('style_color') == 'red'){
+                this.data.set('style_color','blue');
+            }
+            else{
+                this.data.set('style_color','red');
+            }
+        }
+    });
+
+    let myApp = new MyApp;
+    myApp.attach(document.body);
+</script>
+</body>
+
+</html>

@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Quick Start</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        *{
+            font-size: 20px;
+        }
+        th, td{
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        table{
+            border-collapse: collapse;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-$END$
+<script>
+    const MyApp = san.defineComponent({
+        template: `
+                <div>
+                    <button on-click="add()">添加</button>
+                    <table>
+                        <tr>
+                            <th>姓名</th>
+                            <th>审核状态</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr s-for="person, index in persons">
+                            <td>{{person.name}}</td>
+                            <td>{{person.status}}</td>
+                            <td>
+                                <button s-if="person.status == '待审核'" on-click="review(index)">审核</button>
+                                <button s-else on-click="delete(index)">删除</button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            `,
+        initData: function () {
+            return {
+                persons:[
+                    {name: '张三', status: '合格'},
+                    {name: '李四', status: '不合格'}
+                ]
+            };
+        },
+        add: function () {
+            this.data.push('persons', {name: '未知', status: '待审核'});
+        },
+        review: function (index) {
+            this.data.set(`persons[${index}].status`, '合格');
+        },
+        delete: function(index){
+            this.data.removeAt('persons', index);
+        },
+        isNotReviewed: function (index) {
+            if(this.data.get(`persons[${index}].status`) === '待审核')
+                return true;
+            else
+                return false;
+        }
+    });
+
+    let myApp = new MyApp;
+    myApp.attach(document.body);
+</script>
 </body>
+
 </html>
