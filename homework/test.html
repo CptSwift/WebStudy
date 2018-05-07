@@ -1,10 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Quick Start</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-$END$
+<script>
+    var SelectItem = san.defineComponent({
+        template:
+        '<li on-click="select" class="{{value === selectValue ? \'selected\' : \'\'">'
+        + '<slot></slot>'
+        + '</li>',
+
+        // 子组件在各种时机派发消息
+        select: function () {
+            var value = this.data.get('value');
+            this.dispatch('UI:select-item-selected', value);
+        },
+
+        attached: function () {
+            this.dispatch('UI:select-item-attached');
+        },
+
+        detached: function () {
+            this.dispatch('UI:select-item-detached');
+        }
+    });
+
+    var Select = san.defineComponent({
+        template: '<ul><slot></slot></ul>',
+
+        // 上层组件处理自己想要的消息
+        messages: {
+            'UI:select-item-selected': function (arg) {
+                var value = arg.value;
+                this.data.set('value', value);
+
+                // 原则上上层组件允许更改下层组件的数据，因为更新流是至上而下的
+                var len = this.items.length;
+                while (len--) {
+                    this.items[len].data.set('selectValue', value);
+                }
+            },
+
+            'UI:select-item-attached': function (arg) {
+                this.items.push(arg.target);
+                arg.target.data.set('selectValue', this.data.get('value'));
+            },
+
+            'UI:select-item-detached': function (arg) {
+                var len = this.items.length;
+                while (len--) {
+                    if (this.items[len] === arg.target) {
+                        this.items.splice(len, 1);
+                    }
+                }
+            }
+        },
+
+        inited: function () {
+            this.items = [];
+        }
+    });
+
+    var MyComponent = san.defineComponent({
+        components: {
+            'ui-select': Select,
+            'ui-selectitem': SelectItem
+        },
+
+        template: ''
+        + '<div>'
+        + '  <ui-select value="{=value=}">'
+        + '    <ui-selectitem value="1">one</ui-selectitem>'
+        + '    <ui-selectitem value="2">two</ui-selectitem>'
+        + '    <ui-selectitem value="3">three</ui-selectitem>'
+        + '  </ui-select>'
+        + '</div>'
+    });
+
+    var myComponent = new MyComponent;
+    myComponent.attach(document.body);
+</script>
 </body>
 </html>
