@@ -1,10 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Quick Start</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+        .item{
+            display: inline-flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+        }
+        .sub{
+            width: 200px;
+            height: 20px;
+            margin-right: 20px;
+            margin-top: 40px;
+        }
+        .cb-item{
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .cb-sub{
+            width: 40px;
+            margin-right: 80px;
+            margin-top: 40px;
+        }
+        .cb-large{
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            margin-bottom: 20px;
+        }
+        .cb-small{
+            width: 15px;
+            height: 15px;
+            margin-left: 7px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
+
 <body>
-$END$
+<script>
+    const MyApp = san.defineComponent({
+        initData: function () {
+            return {
+                value: "",
+                checked: []
+            };
+        },
+        attached: function () {
+            this.data.set('checked', ['选中','必选']);
+        },
+        template: `
+                <template>
+                    <div style="background: #848484; width: 100%; height: 150px; padding: 50px">
+                        <div style="display:inline-block;">
+                            <span style="float: left; font-size: 35px; color: white; margin-right: 7px;">输入框</span>
+                            <div style="float: right; margin-top: 4px;">
+                                <span style="background: #B8B8B8; color: #848484; font-size: 10px; padding: 1px; padding-left: 3px; padding-right: 3px;">控件</span>
+                                <br>
+                                <span style="color: #B8B8B8; font-size: 13px;">input</span>
+                            </div>
+                        </div>
+                        <p style="color: #B8B8B8; font-size: 13px;">待补充</p>
+                    </div>
+                    <div style="width: 100%; height: 350px; padding: 50px">
+                        <span style="font-size: 25px; color: #848484"><b>| 基础状态</b></span><br>
+                        <div class="item" style="height: 350px">
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub">
+                                <span>常态</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub" style="box-shadow: 0px 0px 5px #0f55ff">
+                                <span>Hover</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="正在输入|" class="sub" style="box-shadow: 0px 0px 5px #0f55ff">
+                                <span>点击输入</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub">
+                                <span>失焦状态</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" disbled class="sub">
+                                <span>不可用</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub" style="margin-left: 50px; border-color: red">
+                                <span style="color: red">错误提示文案</span>
+                            </div>
+                            <div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub" style="margin-left: 50px; border-color: red"><br>
+                                <span style="color: red; font-size: 15px; margin-left: 50px">考虑表单间距</span>
+                            </div>
+                            <div>
+                                <div style="width: 100px; height: 30px; text-align:center; margin-top: 40px; margin-left: 50px; background: pink"><span style="line-height: 30px; color: red;">提示文字</span></div>
+                                <input type="text" placeholder="请输入文字" value="{=value=}" class="sub" style="margin-top: 5px; margin-left: 50px; border-color: red">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="background: #848484; width: 100%; height: 150px; padding: 50px">
+                        <div style="display:inline-block;">
+                            <span style="float: left; font-size: 35px; color: white; margin-right: 7px;">复选框</span>
+                            <div style="float: right; margin-top: 4px;">
+                                <span style="background: #B8B8B8; color: #848484; font-size: 10px; padding: 1px; padding-left: 3px; padding-right: 3px;">控件</span>
+                                <br>
+                                <span style="color: #B8B8B8; font-size: 13px;">Check Box</span>
+                            </div>
+                        </div>
+                        <p style="color: #B8B8B8; font-size: 13px;">复选框（Check Box）用于在两个或两个以上有清晰差别的选项种中进行选择。</p>
+                    </div>
+                    <div style="width: 100%; height: 150px; padding: 50px">
+                        <span style="font-size: 25px; color: #848484"><b>| 基础形态/状态</b></span><br>
+                        <div class="item cb-item" style="width: 900px">
+                            <div class="cb-sub">
+                                <input type="checkbox" value="常态" checked="{=checked=}" class="cb-large">
+                                <span>常态</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="hover" checked="{=checked=}" class="cb-large">
+                                <span>hover</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="选中" checked="{=checked=}" class="cb-large">
+                                <span>选中</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="部分选中" checked="{=checked=}" class="cb-large">
+                                <span>部分选中</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="无效" checked="{=checked=}" disabled class="cb-large">
+                                <span>无效</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="必选" checked="{=checked=}" disabled class="cb-large">
+                                <span>必选</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="部分必选" checked="{=checked=}" disabled class="cb-large">
+                                <span>部分必选</span>
+                            </div>
+
+                            <div class="cb-sub">
+                                <input type="checkbox" value="常态" checked="{=checked=}" class="cb-small">
+                                <span>常态</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="hover" checked="{=checked=}" class="cb-small">
+                                <span>hover</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="选中" checked="{=checked=}" class="cb-small">
+                                <span>选中</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="部分选中" checked="{=checked=}" class="cb-small">
+                                <span>部分选中</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="无效" checked="{=checked=}" disabled class="cb-small">
+                                <span>无效</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="必选" checked="{=checked=}" disabled class="cb-small">
+                                <span>必选</span>
+                            </div>
+                            <div class="cb-sub">
+                                <input type="checkbox" value="部分必选" checked="{=checked=}" disabled class="cb-small">
+                                <span>部分必选</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            `
+    });
+
+    let myApp = new MyApp;
+    myApp.attach(document.body);
+</script>
 </body>
+
 </html>
