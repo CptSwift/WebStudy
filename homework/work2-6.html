@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Quick Start</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style>
+
+    </style>
 </head>
+
 <body>
-$END$
+<script>
+    var TaskMenu = san.defineComponent({
+        template: `
+                <div style="width: 100px; height: 150px; background: red; margin: 40px">
+                    <p><b><slot></slot></b></p>
+                    <span>标题：插槽</span>
+                    <span>内容：插槽</span>
+                    <span>时间：插槽</span>
+                </div>
+        `,
+
+        initData: function () {
+            return {title: 'TaskMenu'};
+        }
+    });
+
+    var MyComponent = san.defineComponent({
+        components: {
+            'task-menu': TaskMenu
+        },
+
+        template: `
+                <div style="display:flex; flex-wrap: wrap; width: 600px">
+                    <task-menu>{{task1}}</task-menu>
+                    <task-menu>{{task2}}</task-menu>
+                    <task-menu>{{task3}}</task-menu>
+                    <task-menu>{{task4}}</task-menu>
+                    <task-menu>{{task5}}</task-menu>
+                    <task-menu>{{task6}}</task-menu>
+                </div>
+        `,
+
+        initData: function () {
+            return {
+                task1: '任务一',
+                task2: '任务二',
+                task3: '任务三',
+                task4: '任务四',
+                task5: '任务五',
+                task6: '任务六',
+            };
+        }
+    });
+
+    let myComponent = new MyComponent;
+    myComponent.attach(document.body);
+</script>
+
 </body>
+
 </html>
