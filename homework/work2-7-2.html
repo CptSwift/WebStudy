@@ -1,10 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+    <style>
+        .enter, .leave {
+            transition: all .5s;
+        }
+
+        .before-enter, .leave {
+            opacity: 0;
+        }
+
+        .enter, .before-leave {
+            opacity: 1;
+        }
+
+        .showoff {
+            transition: all 1s;
+            color: red;
+        }
+    </style>
 </head>
 <body>
-$END$
+<script>
+    let MyComponent = san.defineComponent({
+        template: `
+        <div>
+            <br><span id="ti" style="cursor:pointer" on-click="showoff" on-click="toggle"><b><slot></slot></b></span>
+            <span  s-if="show" s-transition="hook">详细内容</span>
+        </div>
+    `,
+
+        initData: function () {
+            return {show: true};
+        },
+
+        toggle: function () {
+            this.data.set('show', !this.data.get('show'));
+        },
+
+        showoff: function () {
+            document.getElementById('ti').style.color = 'red';
+            setTimeout(() => {
+                document.getElementById('ti').style.color = 'black';
+            }, 500);
+        },
+
+        hook: {
+            enter: function (el, done) {
+                el.setAttribute('class', 'before-enter');
+                setTimeout(()=>{
+                    el.setAttribute('class', 'enter');
+                } , 0);
+                done();
+                return;
+            },
+
+            leave: function (el, done) {
+                el.setAttribute('class', 'leave');
+                setTimeout(()=>{
+                    done();
+                    return;
+                } , 500);
+            }
+        }
+    });
+
+    let A = san.defineComponent({
+        components: {
+            'menu': MyComponent
+        },
+
+        template: `
+        <div>
+            <menu>{{name1}}</menu>
+            <menu>{{name2}}</menu>
+            <menu>{{name3}}</menu>
+            <menu>{{name4}}</menu>
+        </div>
+    `,
+
+        initData: function() {
+            return {
+                name1: '菜单一',
+                name2: '菜单二',
+                name3: '菜单三',
+                name4: '菜单四',
+            };
+        },
+    });
+
+    let a = new A();
+    a.attach(document.body);
+</script>
 </body>
 </html>

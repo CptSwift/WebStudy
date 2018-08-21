@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/san@latest"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let Option = san.defineComponent({
+        components: {
+            'cascader': 'self'
+        },
+
+        template: `
+            <div style="width: 100px; height: 200px; background: rgba(217,248,255,0.49)">
+                <slot s-for="c in data" >
+                    <p style="cursor:pointer" value="{{c.value}}" on-click="toggle(c)">{{c.label}}</p>
+                </slot>
+            </div>
+        `,
+
+        initData: function () {
+            return {add: ''}
+        },
+        
+        toggle: function (item) {
+            this.template = `<div>` + this.template + `<cascader data="{{item.children}}"></cascader></div>`;
+        }
+    });
+    
+    let Cascader = san.defineComponent({
+        components: {
+            'cascader': Option
+        },
+        
+        template: `
+            <div>
+                <span class="demonstration">默认 click 触发子菜单</span>
+                <cascader data="{{children}}"></cascader>
+            </div>
+    `,
+
+        initData: function() {
+            return {
+                children: [{
+                    value: 'zhinan',
+                    label: '指南',
+                    children: [{
+                        value: 'shejiyuanze',
+                        label: '设计原则',
+                        children: [{
+                            value: 'yizhi',
+                            label: '一致'
+                        }, {
+                            value: 'fankui',
+                            label: '反馈'
+                        }, {
+                            value: 'xiaolv',
+                            label: '效率'
+                        }, {
+                            value: 'kekong',
+                            label: '可控'
+                        }]
+                    }, {
+                        value: 'daohang',
+                        label: '导航',
+                        children: [{
+                            value: 'cexiangdaohang',
+                            label: '侧向导航'
+                        }, {
+                            value: 'dingbudaohang',
+                            label: '顶部导航'
+                        }]
+                    }]
+                },  {
+                    value: 'ziyuan',
+                    label: '资源',
+                    children: [{
+                        value: 'axure',
+                        label: 'Axure Components'
+                    }, {
+                        value: 'sketch',
+                        label: 'Sketch Templates'
+                    }, {
+                        value: 'jiaohu',
+                        label: '组件交互文档'
+                    }]
+                }]
+            }
+        }
+    });
+
+    let cascader = new Cascader();
+    cascader.attach(document.body);
+</script>
+</body>
+</html>
